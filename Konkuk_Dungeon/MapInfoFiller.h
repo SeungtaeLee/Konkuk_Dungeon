@@ -24,8 +24,10 @@ public:
 		this->condition = condition;
 	}
 	void fill() {
-		//표시할 정보
+		///표시할 정보
 		//현재층
+		sprintf_s(screen->info_area[0], "현재층 : %d\0", character->floor_at);
 		//남은 count 수
+		sprintf_s(screen->info_area[1], "남은 카운트 : %d\0", condition->count);
 	}
 };

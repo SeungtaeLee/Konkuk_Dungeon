@@ -2,6 +2,7 @@
 
 #include "Filler.h"
 #include "Building.h"
+#include "Floor.h"
 #include "Character.h"
 
 class MapFiller : public Filler{
@@ -25,7 +26,10 @@ public:
 	}
 
 	void fill() {
-
+		int floor_at = character->floor_at;
+		Floor *cur_floor = building->get_floor(floor_at);
+		for (int i = 0; i < MAP_AREA_ROWS; i++) {
+			memcpy_s(screen->map[i], sizeof(screen->map[i]), cur_floor->map[i], sizeof(cur_floor->map[i]));
+		}
 	}
-	
 };

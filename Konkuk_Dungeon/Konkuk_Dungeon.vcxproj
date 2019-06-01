@@ -134,14 +134,6 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Screen.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="map_floor1.txt" />
-    <Text Include="map_floor2.txt" />
-    <Text Include="map_floor3.txt" />
-    <Text Include="map_floor4.txt" />
-    <Text Include="map_floor5.txt" />
-    <Text Include="map_floor6.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

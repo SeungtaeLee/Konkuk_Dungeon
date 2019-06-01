@@ -21,7 +21,7 @@ public:
 	int num_monsters;
 	vector<Item> items;
 	vector<Monster> monsters;
-	vector<vector<char> > map;
+	char map[MAP_AREA_ROWS][MAP_AREA_COLS];
 
 	Floor(string map_path, int item_index, int num_monsters) {
 		this->map_path = map_path;
@@ -51,18 +51,18 @@ public:
 		//층에 존재할 Monster들 생성(갯수 : num)
 		for (int i = 0; i < num; i++) {
 			pair<int, int> new_position = get_position(this->map);
-			Monster new_monster{};
+			//Monster new_monster{}; => 생성해야함.
 			monsters.push_back(new_monster);
 		}
 	}
-	pair<int, int> get_position(const vector<vector<char> > &map) {
+	pair<int, int> get_position(char (*map)[MAP_AREA_COLS]) {
 		srand((unsigned)time(NULL));
 		int x_pos, y_pos;
-		x_pos = rand() % MAP_ROWS;
-		y_pos = rand() % MAP_COLS;
+		x_pos = rand() % MAP_AREA_ROWS;
+		y_pos = rand() % MAP_AREA_COLS;
 		while (map[x_pos][y_pos] != INSIDE_WALL) {
-			x_pos = rand() % MAP_ROWS;
-			y_pos = rand() % MAP_COLS;
+			x_pos = rand() % MAP_AREA_ROWS;
+			y_pos = rand() % MAP_AREA_COLS;
 		}
 		return pair<int, int>(x_pos, y_pos);
 	}
