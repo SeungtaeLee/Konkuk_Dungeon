@@ -4,7 +4,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
+#include <random>
 #include "Floor.h"
+#include "Constants.h"
 
 using namespace std;
 
@@ -19,6 +22,10 @@ public:
 	Building(int floor_size) {
 		this->floor_size = floor_size;
 		create_floors();
+		if (DEBUG_MODE) {
+			cout << "all floors created(building)" << endl;
+			//system("pause"); exit(0);
+		}
 	}
 
 	Floor* get_floor(int floor) {
@@ -26,15 +33,27 @@ public:
 	}
 
 	void create_floors() {
+		if (DEBUG_MODE) cout << "creating floors" << endl;
 		int random_idx;
 		int ex_random_idxs[] = { -1, -1, -1, -1, -1, -1 };
 		srand((unsigned int)time(NULL));
+		vector<int> idx{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+		random_device rd;
+		auto rng = std::default_random_engine{rd()};
+		std::shuffle(begin(idx), end(idx), rng);
+		if (DEBUG_MODE) {
+			cout << "random map index for creating floors : ";
+			for (int i : idx)
+				cout << i << ", ";
+			cout << endl;
+		}
 		for (int i = 0; i < floor_size; i++) {
+			random_idx = idx[i];
+			/*
 			//(i + 1)층부터 생성
-			//random_idx = get_random(int from, int to);
 			int random_idx_trigger = 1;//while문 탈출조건
 			while (random_idx_trigger == 1) {
-				random_idx = rand() % 12 + 1;//랜덤변수 생성
+				random_idx = rand() % 12;//랜덤변수 생성
 				for(int j = 0; j < 6; j++) {//과거의 random_idx와 같은 값이 있는지 비교 과정
 					if(ex_random_idxs[j] == random_idx) {//같은 경우 break후 다시 랜덤변수 생성
 						break;
@@ -51,8 +70,10 @@ public:
 					}
 				}
 			}
+			*/
 			Floor new_floor{map_paths[random_idx], i, NUM_MOSNTERS};
 			floors.push_back(new_floor);
+			if (DEBUG_MODE) cout << "floor " << i << " created" << endl;
 		}
 	}
 };

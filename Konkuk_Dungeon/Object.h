@@ -10,27 +10,11 @@ public:
 		this->y_pos = y_pos;
 		this->symbol = symbol;
 	}
-
-	virtual void move(int direction) //벽인 경우는 컨트롤러 차원에서 업데이트 x
+	virtual void move(int direction) //벽인 경우는 컨트롤러 업데이트 x
 	{
-		switch (direction)
-		{
-		case 0:
-			//up
-			this->y_pos++;
-			break;
-		case 1:
-			//down
-			this->y_pos--;
-			break;
-		case 2:
-			//right
-			this->x_pos++;
-			break;
-		case 3:
-			//left
-			this->x_pos--;
-			break;
-		}
+		int x_delta[4] = { -1, 0, 1, 0 };
+		int y_delta[4] = { 0, 1, 0, -1 };
+		x_pos += x_delta[direction];
+		y_pos += y_delta[direction];
 	}
 };

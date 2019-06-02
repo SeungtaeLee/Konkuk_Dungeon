@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Object.h";
+#include "Object.h"
 using namespace std;
 
 class Item : public Object{
@@ -15,5 +15,4 @@ public:
 		this->message = message;
 		this->item_id = item_id;
 	}
-
 };

@@ -18,7 +18,7 @@ public:
 	bool is_victory() {
 		bool result = true;
 		for (const bool &cond : victory_conditions) {
-			result &= cond;
+			result = result && cond;
 		}
 		return result;
 	}

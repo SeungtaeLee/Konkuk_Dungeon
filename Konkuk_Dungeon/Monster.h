@@ -2,6 +2,7 @@
 
 #include "Object.h"
 #include "Condition.h"
+
 using namespace std;
 
 class Monster : public Object{

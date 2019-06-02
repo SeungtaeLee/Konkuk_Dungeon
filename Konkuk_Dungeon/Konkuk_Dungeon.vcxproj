@@ -134,6 +134,20 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Screen.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="map\map_1.txt" />
+    <Text Include="map\map_10.txt" />
+    <Text Include="map\map_11.txt" />
+    <Text Include="map\map_12.txt" />
+    <Text Include="map\map_2.txt" />
+    <Text Include="map\map_3.txt" />
+    <Text Include="map\map_4.txt" />
+    <Text Include="map\map_5.txt" />
+    <Text Include="map\map_6.txt" />
+    <Text Include="map\map_7.txt" />
+    <Text Include="map\map_8.txt" />
+    <Text Include="map\map_9.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

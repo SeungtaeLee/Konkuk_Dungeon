@@ -12,14 +12,14 @@ public:
 	char condition_area[CONDITION_AREA_ROWS][CONDITION_AREA_COLS + 1];
 
 	// 각 영역의 시작 위치들
-	int map_row = 2;
-	int map_col = 2;
-	int message_row = 36;
-	int message_col = 2;
-	int info_row = 33;
-	int info_col = 2;
-	int condition_row = 2;
-	int condition_col = 102;
+	short map_row = 2;
+	short map_col = 2;
+	short message_row = 36;
+	short message_col = 2;
+	short info_row = 33;
+	short info_col = 2;
+	short condition_row = 2;
+	short condition_col = 102;
 
 	Screen()
 	{
@@ -86,7 +86,7 @@ public:
 		printf("┃                                                                                                                                             ┃\n");
 		printf("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n");
 	}
-	void gotoColRow(int col, int row)
+	void gotoColRow(short col, short row)
 	{
 		COORD pos = { col, row };
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);

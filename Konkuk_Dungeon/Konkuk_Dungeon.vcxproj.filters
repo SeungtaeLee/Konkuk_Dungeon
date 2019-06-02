@@ -69,4 +69,42 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="map\map_1.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_2.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_3.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_4.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_5.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_6.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_7.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_8.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_9.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_10.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_11.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_12.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

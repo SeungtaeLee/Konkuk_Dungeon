@@ -3,6 +3,8 @@
 #include "Filler.h"
 #include "Condition.h"
 
+#include <iostream>
+
 class ConditionFiller : public Filler {
 public:
 	Condition* condition;
@@ -13,8 +15,13 @@ public:
 		this->condition = condition;
 	}
 	void fill(){
-		for (int i = 0; i < CONDITION_AREA_ROWS; i++) {
+		if (DEBUG_MODE) cout << "\tfiller() in conditionfiller" << endl;
+		for (int i = 0; i < 7; i++) {
 			sprintf_s(screen->condition_area[i], "Condition %d : %s", i + 1, condition->victory_conditions[i] ? "true" : "false");
 		}
+		if (DEBUG_MODE) {
+			cout << "filled all condition" << endl;
+		}
+		
 	}
 };
