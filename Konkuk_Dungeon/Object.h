@@ -14,7 +14,7 @@ public:
 	{
 		int x_delta[4] = { -1, 0, 1, 0 };
 		int y_delta[4] = { 0, 1, 0, -1 };
-		x_pos += x_delta[direction];
-		y_pos += y_delta[direction];
+		this->x_pos += x_delta[direction];
+		this->y_pos += y_delta[direction];
 	}
 };

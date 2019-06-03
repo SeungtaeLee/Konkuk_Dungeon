@@ -59,17 +59,16 @@ public:
 		//Ãþ¿¡ Á¸ÀçÇÒ  Item »ý¼º(ÀÎµ¦½º : idx)
 		if (DEBUG_MODE) cout << "creating item(floor : " << item_index << ")"<< endl;
 		pair<int, int> new_position = get_position(map);
-		if (DEBUG_MODE) cout << "got position for item" << endl;
-		Item new_item{ new_position.first, new_position.second, item_symbols[idx], messages[idx], idx};
-		items.push_back(new_item);
+		
+		this->items.emplace_back(new_position.first, new_position.second, item_symbols[idx], messages[idx], idx);
+		if (DEBUG_MODE) cout << "got position for item" << items.front().item_id << endl;
 	}
 	void create_monsters(int num) {
 		//Ãþ¿¡ Á¸ÀçÇÒ Monsterµé »ý¼º(°¹¼ö : num)
 		if (DEBUG_MODE) cout << "creating monsters(num: " << num << ")" << endl;
 		for (int i = 0; i < num; i++) {
 			pair<int, int> new_position = get_position(map);
-			Monster new_monster{new_position.first, new_position.second, MONSTER, -1, -1};
-			monsters.push_back(new_monster);
+			monsters.emplace_back(new_position.first, new_position.second, MONSTER, -1, -1);
 			if (DEBUG_MODE) cout << "monster[" << i << "] created" << endl;
 		}
 	}

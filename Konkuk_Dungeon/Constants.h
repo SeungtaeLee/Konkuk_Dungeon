@@ -59,6 +59,6 @@ constexpr auto MAP_12 = "./map/map_12.txt";
 
 constexpr auto NUM_MOSNTERS = 5;
 
-constexpr auto COUNTS = 500;
+constexpr auto COUNTS = 100000;
 
 constexpr bool DEBUG_MODE = false;

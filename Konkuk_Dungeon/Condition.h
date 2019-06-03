@@ -8,7 +8,6 @@ public:
 	vector<bool> victory_conditions{false, false, false, false, false, false, false};
 	bool fail_condition{ false };
 	int count;
-	vector<int> item_required;
 	int num_vic_conds;
 
 	Condition(int count) {
