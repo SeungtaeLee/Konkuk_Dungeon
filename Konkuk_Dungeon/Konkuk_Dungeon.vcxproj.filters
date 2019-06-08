@@ -106,5 +106,20 @@
     <Text Include="map\map_12.txt">
       <Filter>헤더 파일\map</Filter>
     </Text>
+    <Text Include="map\map_13.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="map\map_14.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="intro.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="clear.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
+    <Text Include="failure.txt">
+      <Filter>헤더 파일\map</Filter>
+    </Text>
   </ItemGroup>
 </Project>

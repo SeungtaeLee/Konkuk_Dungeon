@@ -15,5 +15,6 @@ public:
 	}
 	void fill() {
 		memcpy_s(screen->message_area[0], sizeof(screen->message_area[0]), message.c_str(), message.length());
+		set_message("                                                                                      ");
 	}
 };

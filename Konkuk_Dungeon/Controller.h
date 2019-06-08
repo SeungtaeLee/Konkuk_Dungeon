@@ -13,6 +13,7 @@
 #include "MessageFiller.h"
 #include "ConditionFiller.h"
 vector<char> item_symbols2{ LAPTOP, BOOK, STUDENT_CARD, ICE_COFFEE, REPORT, CERTIFICATE };
+vector<string> item_messages{ITEM1_MESSAGE, ITEM2_MESSAGE, ITEM3_MESSAGE, ITEM4_MESSAGE, ITEM5_MESSAGE, ITEM6_MESSAGE};
 
 class Controller {
 public:
@@ -73,13 +74,22 @@ public:
 		messageFiller = new MessageFiller{ screen, 
 			screen->message_row, screen->message_row + MESSAGE_AREA_ROWS, 
 			screen->message_col, screen->message_col + MESSAGE_AREA_COLS, 
-			"initial message" };
+			"" };
 		if (DEBUG_MODE) cout << "              created messageFiller" << endl;
 		conditionFiller = new ConditionFiller{ screen, 
 			screen->condition_row, screen->condition_row + CONDITION_AREA_ROWS, 
 			screen->condition_col, screen->condition_col + CONDITION_AREA_COLS, 
 			condition };
 		if (DEBUG_MODE) cout << "             created conditionFiller" << endl;
+	}
+	void update_message()
+	{
+		if (cur_floor->items.size() == 0)
+			return;
+		if (cur_floor->items.front().x_pos == character->x_pos && cur_floor->items.front().y_pos == character->y_pos)
+		{
+			messageFiller->set_message(item_messages[character->floor_at]);
+		}
 	}
 	void update_position(int character_direction){ //현재 층의 캐릭터, 몬스터 위치 변경
 		int x_delta[4] = { -1, 0, 1, 0 };
@@ -112,6 +122,9 @@ public:
 		if (character->floor_at < 6 && cur_floor->map[character->x_pos][character->y_pos] == UP_PORTAL)
 		{
 			if (DEBUG_MODE) cout << "going up" << endl;
+			char temp[MESSAGE_AREA_COLS];
+			sprintf_s(temp, "%d층에 도착.", character->floor_at);
+			messageFiller->set_message(temp);
 			character->floor_at++;
 			cur_floor = building->get_floor(character->floor_at);
 			for (int i = 0; i < MAP_AREA_ROWS; i++) {
@@ -128,6 +141,9 @@ public:
 		if (character->floor_at > 0 && cur_floor->map[character->x_pos][character->y_pos] == DOWN_PORTAL)
 		{
 			if (DEBUG_MODE) cout << "going down" << endl;
+			char temp[MESSAGE_AREA_COLS];
+			sprintf_s(temp, "%d층에 도착.", character->floor_at);
+			messageFiller->set_message(temp);
 			character->floor_at--;
 			cur_floor = building->get_floor(character->floor_at);
 			for (int i = 0; i < MAP_AREA_ROWS; i++) {
@@ -156,7 +172,6 @@ public:
 		else {
 			condition->victory_conditions[6] = false;
 		}
-		//카운트 감소
 		condition->count--;
 		if (condition->count <= 0)
 			condition->fail_condition = true;
@@ -174,6 +189,9 @@ public:
 		cur_floor = building->get_floor(character->floor_at);
 		if (DEBUG_MODE)
 			cout << "running" << endl;
+		//인트로 화면 출력
+		screen->print_intro();
+		get_key();
 		do {
 			char new_key = get_key();
 			if (DEBUG_MODE)
@@ -198,8 +216,12 @@ public:
 				//아이템 줍기
 				if (cur_floor->items.front().x_pos != character->x_pos || cur_floor->items.front().y_pos != character->y_pos)
 				{
-					cout << "NO ITEM " << cur_floor->items.size() << endl;
-					printf("char x : %d, y : %d || item : x : %d, y : %d\n", character->x_pos, character->y_pos, cur_floor->items.front().x_pos, cur_floor->items.front().y_pos);
+					if (DEBUG_MODE)
+					{
+						cout << "NO ITEM " << cur_floor->items.size() << endl;
+						printf("char x : %d, y : %d || item : x : %d, y : %d\n", character->x_pos, character->y_pos, cur_floor->items.front().x_pos, cur_floor->items.front().y_pos);
+					}
+					
 					break;
 				}
 				else {
@@ -211,6 +233,7 @@ public:
 				}
 			}
 			update_condition();
+			update_message();
 			if (DEBUG_MODE) cout << "filling map" << endl;
 			mapFiller->fill();
 			if (DEBUG_MODE) cout << "filling map info" << endl;
@@ -221,10 +244,30 @@ public:
 			conditionFiller->fill();
 			if (DEBUG_MODE) cout << "printing" << endl;
 			screen->print();
+			//공격 이펙트 구현 위치
+
 			if (condition->is_victory()) {
 				break;
 			}
-			Sleep(50);
+			Sleep(10);
 		} while (!condition->is_fail());
+		if (condition->is_victory()) {
+			//클리어 한 경우 마지막 화면
+			screen->print_clear();
+			while (true)
+			{
+				if (get_key() == 27)
+					break;
+			}
+		}
+		else if (condition->is_fail()) {
+			//실패시 마지막 화면
+			screen->print_fail();
+			while (true)
+			{
+				if (get_key() == 27)
+					break;
+			}
+		}
 	}
 };

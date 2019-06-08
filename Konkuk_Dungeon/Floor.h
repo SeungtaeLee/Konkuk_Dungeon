@@ -44,6 +44,7 @@ public:
 		ifs.open(map_path);
 		if (!ifs) {
 			cout << "다음 파일이 없습니다. (" << map_path << ")" << endl;
+			system("pause");
 			exit(0);
 		}
 		int idx = 0;

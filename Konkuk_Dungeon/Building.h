@@ -12,7 +12,7 @@
 using namespace std;
 
 //전역변수
-vector<string> map_paths{MAP_1, MAP_2, MAP_3, MAP_4, MAP_5, MAP_6, MAP_7, MAP_8, MAP_9, MAP_10, MAP_11, MAP_12};
+vector<string> map_paths{MAP_1, MAP_2, MAP_3, MAP_4, MAP_5, MAP_6, MAP_7, MAP_8, MAP_9, MAP_10, MAP_11, MAP_12, MAP_13, MAP_14};
 
 class Building{
 public:

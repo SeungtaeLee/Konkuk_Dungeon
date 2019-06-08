@@ -135,10 +135,15 @@
     <ClInclude Include="Screen.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="clear.txt" />
+    <Text Include="failure.txt" />
+    <Text Include="intro.txt" />
     <Text Include="map\map_1.txt" />
     <Text Include="map\map_10.txt" />
     <Text Include="map\map_11.txt" />
     <Text Include="map\map_12.txt" />
+    <Text Include="map\map_13.txt" />
+    <Text Include="map\map_14.txt" />
     <Text Include="map\map_2.txt" />
     <Text Include="map\map_3.txt" />
     <Text Include="map\map_4.txt" />
