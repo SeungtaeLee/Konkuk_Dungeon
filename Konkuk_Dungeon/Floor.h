@@ -34,7 +34,7 @@ public:
 		if (DEBUG_MODE)  cout << "Floor initiating(" << item_index << ")" << endl;
 		map_init(this->map_path);
 		create_items(this->item_index);
-		create_monsters(this->num_monsters);
+		create_monsters(this->num_monsters + this->item_index);
 	}
 
 	void map_init(string map_path) {

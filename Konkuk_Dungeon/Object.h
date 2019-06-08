@@ -12,8 +12,8 @@ public:
 	}
 	virtual void move(int direction) //벽인 경우는 컨트롤러 업데이트 x
 	{
-		int x_delta[4] = { -1, 0, 1, 0 };
-		int y_delta[4] = { 0, 1, 0, -1 };
+		int x_delta[8] = { -1, 0, 1, 0, -1, 1, 1, -1 };
+		int y_delta[8] = { 0, 1, 0, -1, 1, 1, -1, -1 };
 		this->x_pos += x_delta[direction];
 		this->y_pos += y_delta[direction];
 	}

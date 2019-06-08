@@ -92,18 +92,38 @@ public:
 		}
 	}
 	void update_position(int character_direction){ //현재 층의 캐릭터, 몬스터 위치 변경
-		int x_delta[4] = { -1, 0, 1, 0 };
-		int y_delta[4] = { 0, 1, 0, -1 };
+		
+		int x_delta[8] = { -1, 0, 1, 0, -1, 1, 1, -1};
+		int y_delta[8] = { 0, 1, 0, -1, 1, 1, -1, -1};
 		cur_floor = building->get_floor(character->floor_at);
 		for (auto &monster : cur_floor->monsters) {
 			//update monsters positions
-			
-			int direction = rd() % 4;
-			while (cur_floor->map[monster.x_pos + x_delta[direction]][monster.y_pos + y_delta[direction]] != INSIDE_WALL)
-			{
-				direction = rd() % 4;
+			int mode = rd() % 10;
+			if (mode < 7) {
+				//랜덤 이동
+				int direction = rd() % 8;
+				while (cur_floor->map[monster.x_pos + x_delta[direction]][monster.y_pos + y_delta[direction]] != INSIDE_WALL)
+				{
+					direction = rd() % 8;
+				}
+				monster.move(direction);
 			}
-			monster.move(direction);
+			else{
+				//캐릭터 추적
+				int min_idx = 0;
+				for (int i = 0; i < 8; i++) {
+					if ((abs(character->x_pos - (monster.x_pos + x_delta[min_idx])) + abs(character->y_pos - (monster.y_pos + y_delta[min_idx])))
+						> (abs(character->x_pos - (monster.x_pos + x_delta[i])) + abs(character->y_pos - (monster.y_pos + y_delta[i]))
+						 )){
+						min_idx = i;
+					}
+				}
+				if (cur_floor->map[monster.x_pos + x_delta[min_idx]][monster.y_pos + y_delta[min_idx]] == INSIDE_WALL)
+				{
+					monster.move(min_idx);
+				}
+			}
+			
 		}
 		//update characters position 
 		switch (cur_floor->map[character->x_pos + x_delta[character_direction]][character->y_pos + y_delta[character_direction]])
@@ -118,14 +138,20 @@ public:
 	void update_condition(){ //위 함수로 바뀐 상태에 따라 달라진 조건 update
 		if (DEBUG_MODE) cout << "in update condition" << endl;
 		cur_floor = building->get_floor(character->floor_at);
+		//최종 조건 확인
+		if (character->floor_at == 5 && cur_floor->map[character->x_pos][character->y_pos] == UP_PORTAL)
+		{
+			condition->victory_conditions[6] = true;
+			return;
+		}
 		//현 위치가 포탈인경우 층 이동
-		if (character->floor_at < 6 && cur_floor->map[character->x_pos][character->y_pos] == UP_PORTAL)
+		if (character->floor_at < 5 && cur_floor->map[character->x_pos][character->y_pos] == UP_PORTAL)
 		{
 			if (DEBUG_MODE) cout << "going up" << endl;
-			char temp[MESSAGE_AREA_COLS];
-			sprintf_s(temp, "%d층에 도착.", character->floor_at);
-			messageFiller->set_message(temp);
 			character->floor_at++;
+			char temp[MESSAGE_AREA_COLS];
+			sprintf_s(temp, "%d층에 도착.", character->floor_at + 1);
+			messageFiller->set_message(temp);
 			cur_floor = building->get_floor(character->floor_at);
 			for (int i = 0; i < MAP_AREA_ROWS; i++) {
 				for (int j = 0; j < MAP_AREA_COLS; j++) {
@@ -141,10 +167,10 @@ public:
 		if (character->floor_at > 0 && cur_floor->map[character->x_pos][character->y_pos] == DOWN_PORTAL)
 		{
 			if (DEBUG_MODE) cout << "going down" << endl;
-			char temp[MESSAGE_AREA_COLS];
-			sprintf_s(temp, "%d층에 도착.", character->floor_at);
-			messageFiller->set_message(temp);
 			character->floor_at--;
+			char temp[MESSAGE_AREA_COLS];
+			sprintf_s(temp, "%d층에 도착.", character->floor_at + 1);
+			messageFiller->set_message(temp);
 			cur_floor = building->get_floor(character->floor_at);
 			for (int i = 0; i < MAP_AREA_ROWS; i++) {
 				for (int j = 0; j < MAP_AREA_COLS; j++) {
@@ -244,13 +270,8 @@ public:
 			conditionFiller->fill();
 			if (DEBUG_MODE) cout << "printing" << endl;
 			screen->print();
-			//공격 이펙트 구현 위치
-
-			if (condition->is_victory()) {
-				break;
-			}
 			Sleep(10);
-		} while (!condition->is_fail());
+		} while (!condition->is_fail() && !condition->is_victory());
 		if (condition->is_victory()) {
 			//클리어 한 경우 마지막 화면
 			screen->print_clear();

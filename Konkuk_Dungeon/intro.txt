@@ -19,7 +19,7 @@
                                                                                                     
                                                                                                     
                                                                                                     
-                                             press Enter                                            
+                                             press Enter                         
                                                                                                     
                                                                                                     
                                                                                                     
@@ -27,4 +27,4 @@
                                                                                                     
                                                                                                     
                                                                                                     
-                                                                                                    
+                              
