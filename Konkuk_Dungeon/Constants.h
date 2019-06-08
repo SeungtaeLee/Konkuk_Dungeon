@@ -64,8 +64,8 @@ constexpr auto INTRO = "intro.txt";
 constexpr auto CLEAR = "clear.txt";
 constexpr auto FAIL = "failure.txt";
 
-constexpr auto NUM_MOSNTERS = 5;
+constexpr auto NUM_MOSNTERS = 3;
 
-constexpr auto COUNTS = 100000;
+constexpr auto COUNTS = 1500;
 
 constexpr bool DEBUG_MODE = false;

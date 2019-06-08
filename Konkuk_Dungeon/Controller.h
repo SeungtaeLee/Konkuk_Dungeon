@@ -30,8 +30,7 @@ public:
 	MapInfoFiller *mapInfoFiller;
 	MessageFiller *messageFiller;
 	ConditionFiller *conditionFiller;
-	
-
+	bool monster_retreat = false;
 	Controller() {
 		if (DEBUG_MODE)
 			cout << "initiating models" << endl;
@@ -98,31 +97,48 @@ public:
 		cur_floor = building->get_floor(character->floor_at);
 		for (auto &monster : cur_floor->monsters) {
 			//update monsters positions
-			int mode = rd() % 10;
-			if (mode < 7) {
-				//랜덤 이동
-				int direction = rd() % 8;
-				while (cur_floor->map[monster.x_pos + x_delta[direction]][monster.y_pos + y_delta[direction]] != INSIDE_WALL)
-				{
-					direction = rd() % 8;
-				}
-				monster.move(direction);
-			}
-			else{
-				//캐릭터 추적
-				int min_idx = 0;
+			if (monster_retreat) {
+				int max_idx = 0;
 				for (int i = 0; i < 8; i++) {
-					if ((abs(character->x_pos - (monster.x_pos + x_delta[min_idx])) + abs(character->y_pos - (monster.y_pos + y_delta[min_idx])))
-						> (abs(character->x_pos - (monster.x_pos + x_delta[i])) + abs(character->y_pos - (monster.y_pos + y_delta[i]))
-						 )){
-						min_idx = i;
+					if ((abs(character->x_pos - (monster.x_pos + x_delta[max_idx])) + abs(character->y_pos - (monster.y_pos + y_delta[max_idx])))
+				< (abs(character->x_pos - (monster.x_pos + x_delta[i])) + abs(character->y_pos - (monster.y_pos + y_delta[i]))
+					)) {
+						max_idx = i;
 					}
 				}
-				if (cur_floor->map[monster.x_pos + x_delta[min_idx]][monster.y_pos + y_delta[min_idx]] == INSIDE_WALL)
+				if (cur_floor->map[monster.x_pos + x_delta[max_idx]][monster.y_pos + y_delta[max_idx]] == INSIDE_WALL)
 				{
-					monster.move(min_idx);
+					monster.move(max_idx);
 				}
 			}
+			else {
+				int mode = rd() % 10;
+				if (mode < 7) {
+					//랜덤 이동
+					int direction = rd() % 8;
+					while (cur_floor->map[monster.x_pos + x_delta[direction]][monster.y_pos + y_delta[direction]] != INSIDE_WALL)
+					{
+						direction = rd() % 8;
+					}
+					monster.move(direction);
+				}
+				else {
+					//캐릭터 추적
+					int min_idx = 0;
+					for (int i = 0; i < 8; i++) {
+						if ((abs(character->x_pos - (monster.x_pos + x_delta[min_idx])) + abs(character->y_pos - (monster.y_pos + y_delta[min_idx])))
+					> (abs(character->x_pos - (monster.x_pos + x_delta[i])) + abs(character->y_pos - (monster.y_pos + y_delta[i]))
+						)) {
+							min_idx = i;
+						}
+					}
+					if (cur_floor->map[monster.x_pos + x_delta[min_idx]][monster.y_pos + y_delta[min_idx]] == INSIDE_WALL)
+					{
+						monster.move(min_idx);
+					}
+				}
+			}
+			
 			
 		}
 		//update characters position 
@@ -257,6 +273,8 @@ public:
 					if(DEBUG_MODE) cout << character->inventory.size() << endl;
 					break;
 				}
+			case 'm':
+				monster_retreat = !monster_retreat;
 			}
 			update_condition();
 			update_message();
